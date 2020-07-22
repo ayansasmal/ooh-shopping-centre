@@ -2,6 +2,10 @@
 
 This is a Node.js Application providing APIs to manage Shopping Centre and Assets. This app uses in-memory MongoDB to store data.
 
+Each request is assigned an unique messageId for easy tracking of the transactions
+
+Each request is validated for having appropriate roles and authorizations.
+
 ## Roles for accessing app
 
 ### Role for Admin
@@ -77,3 +81,5 @@ To get the latest swagger spec, start the app in development mode and open http:
 npm test
 ```
 
+## Logs
+All logs are generated in the logs folder in the root directory.
