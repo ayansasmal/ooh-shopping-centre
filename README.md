@@ -45,17 +45,29 @@ yarn install
 ```
 
 ## Running the app
-
-For development
+Development mode
 ```
 npm start
 ```
-For production
-```
-npm start-prod
-```
+Once the server is up please follow the below steps to invoke/test APIs.
+1. Access http://localhost:8080/api-doc
+
+2. To check if API is up, **"Try it out"** the healthcheck interface.
+
+3. To login to the Application, **"Try it out"** the login interface.
+
+4. Provide the correct Username and Password in the Request Body for the APIs and hit **Execute**
+
+5. Copy the **authorization** header value from the response if login is successful
+
+6. Go to top of Api-doc, click **Authorize** and paste the **authorization** header value and hit **Authorize**
+
+7. Go to the desired API and initiate the transaction.
+
+8. *Happy managing the shopping centres and assets!!!*
+
 ### Initial Data for API
-To login use *johndoeadmin* and *ooh@123*. You can create more such credentials and roles in scripts.js.
+To login use *johndoeadmin* and *ooh@123*. You can create more credentials and roles in scripts.js.
 
 ## API OAS 
 To get the latest swagger spec, start the app in development mode and open http://localhost:8080/api-doc or http://localhost:8080/swagger.json
