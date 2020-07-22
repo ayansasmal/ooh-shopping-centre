@@ -1,0 +1,230 @@
+paths:
+  /assets:
+    get:
+      description: Fetch all the shopping centres
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
+          description: The status of the asset
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: The name of the asset
+        - in: query
+          name: shoppingCentre
+          schema:
+            type: string
+          description: The name of the shopping Centre
+      tags:
+        - Assets Management
+      operationId: fetchAllAssets
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - assets-readAll
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: successfull retrieval
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AssetDetails"
+    post:
+      description: Add an Asset
+      tags:
+        - Assets Management
+      operationId: addAsset
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - assets-add
+        - app-admin
+      security:
+        - authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssetDetails"
+      responses:
+        "201":
+          description: Asset creation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+
+  /assets/{assetId}:
+    parameters:
+      # - $ref: "#/components/parameters/authorization"
+      - $ref: "#/components/parameters/assetId"
+    get:
+      description: Fetch the asset as per the Id
+      tags:
+        - Assets Management
+      operationId: fetchAsset
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - assets-read
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: successfull retrieval
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssetDetails"
+    post:
+      description: update details of an Asset
+      tags:
+        - Assets Management
+      operationId: updateAsset
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - assets-update
+        - app-admin
+      security:
+        - authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssetDetails"
+      responses:
+        "201":
+          description: Asset updation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+    delete:
+      description: delete Asset
+      tags:
+        - Assets Management
+      operationId: removeAsset
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - assets-delete
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: successfull removal
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+
+  /assets/{assetId}/{operation}:
+    parameters:
+      # - $ref: "#/components/parameters/authorization"
+      - $ref: "#/components/parameters/assetId"
+      - $ref: "#/components/parameters/operation"
+    post:
+      description: update the status of the asset
+      tags:
+        - Assets Management
+      operationId: toggleAssetStatus
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - assets-change-status
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: successfull toggle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+components:
+  parameters:
+    assetId:
+      in: path
+      name: assetId
+      required: true
+      schema:
+        type: string
+      description: Id of the asset
+    operation:
+      in: path
+      name: operation
+      required: true
+      schema:
+        type: string
+        enum:
+          - activate
+          - deactivate
+      description: operation to be performed
+
+  schemas:
+    AssetDetails:
+      type: object
+      required:
+        - identifier
+      properties:
+        identifier:
+          type: string
+          example: "001"
+        name:
+          type: string
+          example: "Billboard"
+        dimension:
+          type: object
+          properties:
+            height:
+              type: string
+              example: "10 ft."
+            width:
+              type: string
+              example: "5 ft."
+            depth:
+              type: string
+              example: "4 in."
+        shoppingCentre:
+          type: string
+          example: "SC-001"
+        location:
+          type: object
+          properties:
+            level:
+              type: string
+              example: "l2"
+            landmark:
+              type: string
+              example: "shop no. 13"
+            geoCode:
+              type: object
+              properties:
+                lat:
+                  type: string
+                  example: "123"
+                long:
+                  type: string
+                  example: "123"
+        media:
+          type: array
+          items:
+            type: string
+            example: ["source 1", "source 2"]

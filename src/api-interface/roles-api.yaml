@@ -1,0 +1,112 @@
+paths:
+  /roles:
+    get:
+      description: Fetch all the roles
+      tags:
+        - Role Management
+      operationId: getAllRoles
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - role-read
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: All the roles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Role"
+    post:
+      description: Create role for an user
+      tags:
+        - Role Management
+      operationId: createRole
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - role-create
+        - app-admin
+      security:
+        - authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Role"
+      responses:
+        "201":
+          description: User creation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+  /roles/{rolename}:
+    parameters:
+      # - $ref: "#/components/parameters/authorization"
+      - $ref: "#/components/parameters/rolename"
+    get:
+      description: Fetch detail of the role
+      tags:
+        - Role Management
+      operationId: getRole
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - role-read
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: All the roles
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Role"
+    delete:
+      description: delete the role
+      tags:
+        - Role Management
+      operationId: removeRole
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - role-delete
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: role deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+components:
+  parameters:
+    rolename:
+      in: path
+      name: rolename
+      required: true
+      schema:
+        type: string
+      description: name of the role
+  schemas:
+    Role:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+          example: "app-creator"
+        description:
+          type: string
+          example: "Role for app creator"

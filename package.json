@@ -1,0 +1,70 @@
+{
+  "name": "ooh-shopping-centre",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "start-once": "env-cmd -e development babel-node ./src/index.js",
+    "start": "env-cmd -e development nodemon -e js,json,yaml --exec babel-node ./src/index.js",
+    "start-prod": "env-cmd -e production nodemon -e js,json,yaml --exec babel-node ./src/index.js",
+    "start-dummy": "nodemon -e js,json,yaml --exec babel-node ./src/dummy.js",
+    "test": "env-cmd -e test jest --coverage",
+    "test-watch": "env-cmd -e test jest --coverage --watchAll"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/node": "^7.10.5",
+    "@babel/plugin-transform-runtime": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "4.17.1",
+    "express-openapi-validator": "^3.16.7",
+    "jsonwebtoken": "8.5.1",
+    "mongodb": "^3.5.9",
+    "mongodb-memory-server": "6.6.1",
+    "mongoose": "^5.9.25",
+    "supertest": "^4.0.2",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-parser": "^10.0.1",
+    "swagger-routes-express": "^3.2.1",
+    "swagger-ui": "^3.30.0",
+    "swagger-ui-express": "^4.1.4",
+    "uuid": "^8.2.0",
+    "validator": "13.1.1",
+    "winston": "^3.3.3",
+    "winston-mongodb": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/babel__core": "^7.1.9",
+    "@types/bcrypt": "^3.0.0",
+    "@types/express": "^4.17.7",
+    "@types/jest": "^26.0.5",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/mongodb": "^3.5.25",
+    "@types/mongodb-memory-server": "^2.3.0",
+    "@types/mongoose": "^5.7.32",
+    "@types/swagger-jsdoc": "^3.0.2",
+    "@types/swagger-parser": "^7.0.1",
+    "@types/swagger-ui-express": "^4.1.2",
+    "@types/supertest": "^2.0.10",
+    "@types/validator": "^13.1.0",
+    "@types/winston": "^2.4.4",
+    "babel-jest": "^26.1.0",
+    "env-cmd": "^10.1.0",
+    "jest": "^26.1.0",
+    "nodemon": "2.0.4"
+  },
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayansasmal/ooh-shopping-centre.git"
+  },
+  "author": "Ayan Sasmal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayansasmal/ooh-shopping-centre/issues"
+  },
+  "homepage": "https://github.com/ayansasmal/ooh-shopping-centre#readme"
+}

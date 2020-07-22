@@ -1,0 +1,150 @@
+paths:
+  /user:
+    get:
+      description: Fetch all the users
+      tags:
+        - User Management
+      operationId: fetchAllUsers
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - user-readAll
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: successfull retrieval
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDetails"
+    post:
+      description: Create user of the application
+      tags:
+        - User Management
+      operationId: createUser
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - user-create
+        - app-admin
+      security:
+        - authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDetails"
+      responses:
+        "201":
+          description: User creation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+
+  /user/{username}:
+    parameters:
+      # - $ref: "#/components/parameters/authorization"
+      - $ref: "#/components/parameters/username"
+    get:
+      description: Fetch all the users
+      tags:
+        - User Management
+      operationId: fetchUser
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - user-read
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: successfull retrieval
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDetails"
+    post:
+      description: update user of the application
+      tags:
+        - User Management
+      operationId: updateUser
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - user-update
+        - app-admin
+      security:
+        - authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDetails"
+      responses:
+        "201":
+          description: User creation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+    delete:
+      description: delete user
+      tags:
+        - User Management
+      operationId: removeUser
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - user-delete
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: successfull removal
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+components:
+  parameters:
+    username:
+      in: path
+      name: username
+      required: true
+      schema:
+        type: string
+      description: username of the user
+  schemas:
+    UserDetails:
+      type: object
+      required:
+        - username
+      properties:
+        username:
+          type: string
+          example: "johndoe123"
+        email:
+          type: string
+          example: "johndoe@email.com"
+        password:
+          type: string
+          example: "johndoe1234"
+        oldPassword:
+          type: string
+          example: "johndoe1234"
+        role:
+          type: array
+          items:
+            type: string
+          example:
+            - app-admin
+            - user-readAll

@@ -1,0 +1,236 @@
+paths:
+  /shopping-centres:
+    get:
+      description: Fetch all the shopping centres
+      tags:
+        - Shopping Centres Management
+      operationId: fetchAllShoppingCentres
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - shopping-centre-readAll
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: successfull retrieval
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShoppingCentreDetails"
+    post:
+      description: Add a shopping centre
+      tags:
+        - Shopping Centres Management
+      operationId: addShoppingCentre
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - shopping-centre-add
+        - app-admin
+      security:
+        - authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingCentreDetails"
+      responses:
+        "201":
+          description: Shopping Centre creation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingCentreDetails"
+
+  /shopping-centres/{shoppingCentreId}:
+    parameters:
+      # - $ref: "#/components/parameters/authorization"
+      - $ref: "#/components/parameters/shoppingCentreId"
+    get:
+      description: Fetch the shopping centre as per the Id
+      tags:
+        - Shopping Centres Management
+      operationId: fetchShoppingCentre
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - shopping-centre-read
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: successfull retrieval
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingCentreDetails"
+    post:
+      description: update details of a Shopping Centre
+      tags:
+        - Shopping Centres Management
+      operationId: updateShoppingCentre
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - shopping-centre-update
+        - app-admin
+      security:
+        - authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingCentreDetails"
+      responses:
+        "201":
+          description: Shopping Centre updation successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+    delete:
+      description: delete Shopping centre
+      tags:
+        - Shopping Centres Management
+      operationId: removeShoppingCentre
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - shopping-centre-delete
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: successfull removal
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+
+  /shopping-centres/{shoppingCentreId}/assets:
+    parameters:
+      # - $ref: "#/components/parameters/authorization"
+      - $ref: "#/components/parameters/shoppingCentreId"
+    get:
+      description: Fetch the assests for the shopping centre as per the Id
+      tags:
+        - Shopping Centres Management
+      operationId: fetchAssetsForShoppingCentre
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - shopping-centre-read-assets
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: successfull retrieval
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AssetDetails"
+  /shopping-centres/{shoppingCentreId}/addAsset/{assetId}:
+    parameters:
+      # - $ref: "#/components/parameters/authorization"
+      - $ref: "#/components/parameters/shoppingCentreId"
+      - $ref: "#/components/parameters/assetId"
+    post:
+      description: Add asset for the shopping centre as per the Id
+      tags:
+        - Shopping Centres Management
+      operationId: addAssetsForShoppingCentre
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - shopping-centre-add-assets
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "201":
+          description: Asset addition successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingCentreDetails"
+  /shopping-centres/{shoppingCentreId}/removeAsset/{assetId}:
+    parameters:
+      # - $ref: "#/components/parameters/authorization"
+      - $ref: "#/components/parameters/shoppingCentreId"
+      - $ref: "#/components/parameters/assetId"
+    delete:
+      description: remove the asset for the shopping centre as per the Ids
+      tags:
+        - Shopping Centres Management
+      operationId: removeAssetsForShoppingCentre
+      x-middleware:
+        - roleMiddleware
+      x-role:
+        - shopping-centre-remove-assets
+        - app-admin
+      security:
+        - authorization: []
+      responses:
+        "200":
+          description: Asset removal successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingCentreDetails"
+components:
+  parameters:
+    shoppingCentreId:
+      in: path
+      name: shoppingCentreId
+      required: true
+      schema:
+        type: string
+      description: Id of the shopping centre
+  schemas:
+    ShoppingCentreDetails:
+      type: object
+      required:
+        - identifier
+      properties:
+        identifier:
+          type: string
+          example: "SC-001"
+        name:
+          type: string
+          example: "Westfield"
+        address:
+          type: object
+          properties:
+            streetNumber:
+              type: string
+              example: "123"
+            streetName:
+              type: string
+              example: "Pitt Street"
+            suburb:
+              type: string
+              example: "Sydney"
+            postCode:
+              type: string
+              example: "2000"
+            state:
+              type: string
+              example: "NSW"
+            country:
+              type: string
+              example: "AU"
+        assets:
+          type: array
+          items:
+            type: string

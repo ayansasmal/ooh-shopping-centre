@@ -1,0 +1,53 @@
+components:
+  securitySchemes:
+    authorization:
+      type: apiKey
+      description: JWT to authorize requests.
+      name: authorization
+      in: header
+  parameters:
+    authorization:
+      in: header
+      name: authorization
+      required: true
+      schema:
+        type: string
+      description: authorization token
+  schemas:
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          example: "User-101"
+        message:
+          type: string
+          example: "User already exists"
+        description:
+          type: string
+          example: "User already exists"
+    Status:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          example: "Successfuly executed command"
+
+tags:
+  - name: Health Check
+    description: Health check for the APIs
+  - name: Session Management
+    description: Everything about managing the Session
+  - name: Assets Management
+    description: Everything about managing Assets in Shopping Centres
+  - name: Shopping Centres Management
+    description: Everything about managing the Shopping Centres
+  - name: User Management
+    description: Everything about managing the Users
+  - name: Role Management
+    description: Everything about managing the Roles
